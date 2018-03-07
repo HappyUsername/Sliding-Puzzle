@@ -11,6 +11,8 @@ public class Interface{
 	frame.setSize(448,360);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+	GridLayout layout = new GridLayout(3,4);
+	panel.setLayout(layout);
 
 	ImageIcon i0 = new ImageIcon("bart0.jpg");
 	JButton b0 = new JButton(i0);
