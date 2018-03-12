@@ -1,7 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
+import javax.net.*;
+import java.awt.Image;
 
-public class Interface extends JLabel implements ActionListener {
+public class Interface extends JFrame implements ActionListener{
 	JFrame frame = new JFrame(); // moved the objects out of constructor
 	JPanel panel = new JPanel();
 
@@ -18,39 +21,41 @@ public class Interface extends JLabel implements ActionListener {
 	ImageIcon i10 = new ImageIcon("bart10.jpg");
 	ImageIcon i11 = new ImageIcon("bart11.jpg");
 	
-	public Interface(){
+	JButton b0 = new JButton(i0); // probably b0 is not for push???
 	
+	JButton b1 = new JButton(i1);
+	JButton b2 = new JButton(i2);
+	JButton b3 = new JButton(i3);
+	JButton b4 = new JButton(i4);
+	JButton b5 = new JButton(i5);
+	JButton b6 = new JButton(i6);
+	JButton b7 = new JButton(i7);
+	JButton b8 = new JButton(i8);
+	JButton b9 = new JButton(i9);
+	JButton b10 = new JButton(i10);	
+	JButton b11 = new JButton(i11);
+
+	public Interface(){
+	b1.addActionListener(this); 
+	b2.addActionListener(this);
+	b3.addActionListener(this); 
+	b4.addActionListener(this); 
+	b5.addActionListener(this); 
+	b6.addActionListener(this); 
+	b7.addActionListener(this);
+	b8.addActionListener(this); 
+	b9.addActionListener(this); 
+	b10.addActionListener(this); 
+	b11.addActionListener(this);
+
+
 	frame.setContentPane(panel);
 	frame.setSize(448,360);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	GridLayout layout = new GridLayout(3,4);
 	panel.setLayout(layout);
-
-	JButton b0 = new JButton(i0); // probably b0 is not for push???
-	
-	JButton b1 = new JButton(i1);
-	b1.addActionListener(this); 
-	JButton b2 = new JButton(i2);
-	b2.addActionListener(this); 
-	JButton b3 = new JButton(i3);
-	b3.addActionListener(this); 
-	JButton b4 = new JButton(i4);
-	b4.addActionListener(this); 
-	JButton b5 = new JButton(i5);
-	b5.addActionListener(this); 
-	JButton b6 = new JButton(i6);
-	b6.addActionListener(this); 
-	JButton b7 = new JButton(i7);
-	b7.addActionListener(this);
-	JButton b8 = new JButton(i8);
-	b8.addActionListener(this); 
-	JButton b9 = new JButton(i9);
-	b9.addActionListener(this); 
-	JButton b10 = new JButton(i10);	
-	b10.addActionListener(this); 
-	JButton b11 = new JButton(i11);
-	b11.addActionListener(this); 
+ 
 
 	b0.setMargin(new Insets(0, 0, 0, 0));
 	b1.setMargin(new Insets(0, 0, 0, 0));
@@ -82,6 +87,57 @@ public class Interface extends JLabel implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e){  
 	// swap the images here
+		
+		//ImageIcon iTemp = new ImageIcon();
+		if (e.getSource() == b1){
 	
-	}
+			iTemp = i1;
+			b1.setIcon(i0);
+			b0.setIcon(iTemp);
+		}
+		if (e.getSource() == b2){
+			//ImageIcon iTemp = new ImageIcon();
+			//iTemp = i2;
+			b2.setIcon(i0);
+			b0.setIcon(i2);
+		}
+		if (e.getSource() == b3){
+			b3.setIcon(i0);
+			b0.setIcon(i3);
+		}
+		if (e.getSource() == b4){
+			b4.setIcon(i0);
+			b0.setIcon(i4);
+		}
+		if (e.getSource() == b5){
+			b5.setIcon(i0);
+			b0.setIcon(i5);
+		}
+		if (e.getSource() == b6){
+			b6.setIcon(i0);
+			b0.setIcon(i6);
+		}
+		if (e.getSource() == b7){
+			b7.setIcon(i0);
+			b0.setIcon(i7);
+		}
+		if (e.getSource() == b8){
+			b8.setIcon(i0);
+			b0.setIcon(i8);
+		}
+		if (e.getSource() == b9){
+			b9.setIcon(i0);
+			b0.setIcon(i9);
+		}
+		if (e.getSource() == b10){
+			b10.setIcon(i0);
+			b0.setIcon(i10);
+		}
+		if (e.getSource() == b11){
+			b11.setIcon(i0);
+			b0.setIcon(i11);
+		}
+
+
+	 }// end of ActionPerformed
 }
