@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.net.*;
 import java.awt.Image;
-
+import javax.swing.ImageIcon;
 public class Interface extends JFrame implements ActionListener{
 	JFrame frame = new JFrame(); // moved the objects out of constructor
 	JPanel panel = new JPanel();
@@ -88,52 +88,58 @@ public class Interface extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e){  
 	// swap the images here
 		
-		//ImageIcon iTemp = new ImageIcon();
-		if (e.getSource() == b1){
-	
-			iTemp = i1;
-			b1.setIcon(i0);
-			b0.setIcon(iTemp);
+
+		if (e.getSource() == b1  && b0.getIcon() == i0){
+			//if(){
+				//Image img = b1.getIcon();
+				//ImageIcon iTemp = new ImageIcon();
+				//iTemp = b1.getIcon();
+				b1.setIcon(i0);
+				b0.setIcon(i1);
+			//}
 		}
-		if (e.getSource() == b2){
+		if (e.getSource() == b2  && b0.getIcon() == i0){ 
+	/* 
+		make a function for the 2nd operataion and it is true then move
+	*/
 			//ImageIcon iTemp = new ImageIcon();
 			//iTemp = i2;
 			b2.setIcon(i0);
 			b0.setIcon(i2);
 		}
-		if (e.getSource() == b3){
+		if (e.getSource() == b3 && b0.getIcon() == i0){
 			b3.setIcon(i0);
 			b0.setIcon(i3);
 		}
-		if (e.getSource() == b4){
+		if (e.getSource() == b4 && b0.getIcon() == i0){
 			b4.setIcon(i0);
 			b0.setIcon(i4);
 		}
-		if (e.getSource() == b5){
+		if (e.getSource() == b5 && b0.getIcon() == i0){
 			b5.setIcon(i0);
 			b0.setIcon(i5);
 		}
-		if (e.getSource() == b6){
+		if (e.getSource() == b6 && b0.getIcon() == i0){
 			b6.setIcon(i0);
 			b0.setIcon(i6);
 		}
-		if (e.getSource() == b7){
+		if (e.getSource() == b7 && b0.getIcon() == i0){
 			b7.setIcon(i0);
 			b0.setIcon(i7);
 		}
-		if (e.getSource() == b8){
+		if (e.getSource() == b8 && b0.getIcon() == i0){
 			b8.setIcon(i0);
 			b0.setIcon(i8);
 		}
-		if (e.getSource() == b9){
+		if (e.getSource() == b9 && b0.getIcon() == i0){
 			b9.setIcon(i0);
 			b0.setIcon(i9);
 		}
-		if (e.getSource() == b10){
+		if (e.getSource() == b10 && b0.getIcon() == i0){
 			b10.setIcon(i0);
 			b0.setIcon(i10);
 		}
-		if (e.getSource() == b11){
+		if (e.getSource() == b11 && b0.getIcon() == i0){
 			b11.setIcon(i0);
 			b0.setIcon(i11);
 		}
