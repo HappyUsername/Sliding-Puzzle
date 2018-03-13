@@ -89,7 +89,9 @@ public class Interface extends JFrame implements ActionListener{
 	// swap the images here
 		
 
-		if (e.getSource() == b1  && b0.getIcon() == i0){
+		if (e.getSource() == b1  && (b0.getIcon() == i0 ||
+			b2.getIcon() == i0 ||
+			b5.getIcon() == i0 )){
 			//if(){
 				//Image img = b1.getIcon();
 				//ImageIcon iTemp = new ImageIcon();
@@ -98,52 +100,92 @@ public class Interface extends JFrame implements ActionListener{
 				b0.setIcon(i1);
 			//}
 		}
-		if (e.getSource() == b2  && b0.getIcon() == i0){ 
-	/* 
-		make a function for the 2nd operataion and it is true then move
-	*/
+		if (e.getSource() == b2  && 
+			(b1.getIcon() == i0 ||
+			b3.getIcon() == i0 ||
+			b6.getIcon() == i0 ))
+		{
+
 			//ImageIcon iTemp = new ImageIcon();
 			//iTemp = i2;
 			b2.setIcon(i0);
 			b0.setIcon(i2);
 		}
-		if (e.getSource() == b3 && b0.getIcon() == i0){
+		if (e.getSource() == b3 &&
+			(b2.getIcon() == i0 ||
+			b7.getIcon() == i0))
+		{
 			b3.setIcon(i0);
 			b0.setIcon(i3);
 		}
-		if (e.getSource() == b4 && b0.getIcon() == i0){
+		if (e.getSource() == b4 &&
+			(b0.getIcon() == i0 ||
+			b5.getIcon() == i0 ||
+			b8.getIcon() == i0 ))
+		{
 			b4.setIcon(i0);
 			b0.setIcon(i4);
 		}
-		if (e.getSource() == b5 && b0.getIcon() == i0){
+		if (e.getSource() == b5 &&
+			(b1.getIcon() == i0 ||
+			b4.getIcon() == i0 ||
+			b6.getIcon() == i0 ||
+			b9.getIcon()==i0))
+		{
 			b5.setIcon(i0);
 			b0.setIcon(i5);
 		}
-		if (e.getSource() == b6 && b0.getIcon() == i0){
+		if (e.getSource() == b6 && 
+			(b2.getIcon() == i0 ||
+			b5.getIcon() == i0 ||
+			b7.getIcon() == i0 ||
+			b10.getIcon()==i0))
+		{
 			b6.setIcon(i0);
 			b0.setIcon(i6);
 		}
-		if (e.getSource() == b7 && b0.getIcon() == i0){
+		if (e.getSource() == b7 && 
+			(b3.getIcon() == i0 ||
+			b6.getIcon() == i0 ||
+			b11.getIcon() == i0 ))
+		{
 			b7.setIcon(i0);
 			b0.setIcon(i7);
 		}
-		if (e.getSource() == b8 && b0.getIcon() == i0){
+		if (e.getSource() == b8 &&
+			(b4.getIcon() == i0 ||
+			b9.getIcon() == i0 ))
+		{
 			b8.setIcon(i0);
 			b0.setIcon(i8);
 		}
-		if (e.getSource() == b9 && b0.getIcon() == i0){
+		if (e.getSource() == b9 &&
+			(b5.getIcon() == i0 ||
+			b10.getIcon() == i0 ||
+			b8.getIcon() == i0 ))
+		{
 			b9.setIcon(i0);
 			b0.setIcon(i9);
 		}
-		if (e.getSource() == b10 && b0.getIcon() == i0){
+		if (e.getSource() == b10 &&
+			(b9.getIcon() == i0 ||
+			b6.getIcon() == i0 ||
+			b11.getIcon() == i0 ))
+		{
 			b10.setIcon(i0);
 			b0.setIcon(i10);
 		}
-		if (e.getSource() == b11 && b0.getIcon() == i0){
+		if (e.getSource() == b11 && 
+			(b7.getIcon() == i0 ||
+			b10.getIcon() == i0 ))
+		{
 			b11.setIcon(i0);
 			b0.setIcon(i11);
 		}
 
 
 	 }// end of ActionPerformed
+
+	
+
 }
