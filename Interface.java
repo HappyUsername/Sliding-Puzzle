@@ -4,11 +4,19 @@ import java.awt.event.*;
 import javax.net.*;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+// https://codereview.stackexchange.com/questions/122150/logic-for-shuffling-sliding-puzzle
 public class Interface extends JFrame implements ActionListener{
-	JFrame frame = new JFrame(); // moved the objects out of constructor
-	JPanel panel = new JPanel();
+	private JFrame frame = new JFrame("Puzzle"); // moved the objects out of constructor
+	private JPanel panel = new JPanel();
 
-	ImageIcon i0 = new ImageIcon("bart0.jpg");	
+	private JMenuBar menuB = new JMenuBar();
+	private JMenu menu = new JMenu();
+	private JMenuItem HighScore = new JMenuItem("HighScore");
+	private JMenuItem Random = new JMenuItem("Random");
+	private JMenuItem About = new JMenuItem("About");
+
+
+	private ImageIcon i0 = new ImageIcon("bart0.jpg");	
 	ImageIcon i1 = new ImageIcon("bart1.jpg");
 	ImageIcon i2 = new ImageIcon("bart2.jpg");
 	ImageIcon i3 = new ImageIcon("bart3.jpg");
@@ -36,22 +44,14 @@ public class Interface extends JFrame implements ActionListener{
 	JButton b11 = new JButton(i11);
 
 	public Interface(){
-	b1.addActionListener(this); 
-	b2.addActionListener(this);
-	b3.addActionListener(this); 
-	b4.addActionListener(this); 
-	b5.addActionListener(this); 
-	b6.addActionListener(this); 
-	b7.addActionListener(this);
-	b8.addActionListener(this); 
-	b9.addActionListener(this); 
-	b10.addActionListener(this); 
-	b11.addActionListener(this);
-
 
 	frame.setContentPane(panel);
 	frame.setSize(448,360);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	//frame.setJMenuBar(menuB);
+	//menuB.add(HighScore);
+	//menuB.add(Random);
+	//menuB.add(About);
 
 	GridLayout layout = new GridLayout(3,4);
 	panel.setLayout(layout);
@@ -70,6 +70,18 @@ public class Interface extends JFrame implements ActionListener{
 	b10.setMargin(new Insets(0, 0, 0, 0));
 	b11.setMargin(new Insets(0, 0, 0, 0));
 
+	b1.addActionListener(this); 
+	b2.addActionListener(this);
+	b3.addActionListener(this); 
+	b4.addActionListener(this); 
+	b5.addActionListener(this); 
+	b6.addActionListener(this); 
+	b7.addActionListener(this);
+	b8.addActionListener(this); 
+	b9.addActionListener(this); 
+	b10.addActionListener(this); 
+	b11.addActionListener(this);
+
 	panel.add(b0);
 	panel.add(b1);
 	panel.add(b2);
@@ -87,18 +99,28 @@ public class Interface extends JFrame implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e){  
 	// swap the images here
-		
+		int counter = 0;
 
-		if (e.getSource() == b1  && (b0.getIcon() == i0 ||
+		if (e.getSource() == b1  && 
+			(b0.getIcon() == i0 ||
 			b2.getIcon() == i0 ||
 			b5.getIcon() == i0 )){
-			//if(){
-				//Image img = b1.getIcon();
-				//ImageIcon iTemp = new ImageIcon();
-				//iTemp = b1.getIcon();
+			if(b0.getIcon() == i0){
+				Image img = b1.getIcon();
+				ImageIcon iTemp = new ImageIcon();
+				iTemp = b1.getIcon();
+
 				b1.setIcon(i0);
-				b0.setIcon(i1);
-			//}
+				b0.setIcon(iTemp);
+			}
+			else if(b2.getIcon() == i0){
+				b2.setIcon(i1);
+				b1.setIcon(i0);
+			}
+			else{
+				b5.setIcon(i1);
+				b1.setIcon(i0);
+			}
 		}
 		if (e.getSource() == b2  && 
 			(b1.getIcon() == i0 ||
@@ -178,10 +200,18 @@ public class Interface extends JFrame implements ActionListener{
 		if (e.getSource() == b11 && 
 			(b7.getIcon() == i0 ||
 			b10.getIcon() == i0 ))
-		{
-			b11.setIcon(i0);
-			b0.setIcon(i11);
-		}
+		{	
+
+			if (b10.getIcon() == i0){
+					b10.setIcon(i11);
+					b11.setIcon(i0);
+			}
+			else{
+					b7.setIcon(i11);
+					b11.setIcon(i0);
+			}
+
+		} // 
 
 
 	 }// end of ActionPerformed
