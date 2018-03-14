@@ -20,9 +20,11 @@ public class Interface extends JFrame implements ActionListener{
 	private final int cols = 4;
 	private JButton tiles[][] = new JButton[rows][cols];
 	
-	private int i,j;
 	
-
+	
+	private int trackX = 0, trackY = 0; // needed for the tracking of the hole
+	private ImageIcon empty;
+	//ImageIcon empty = new ImageIcon("bart0.jpg");
 	public Interface(){
 
 		frame.setContentPane(panel);
@@ -39,7 +41,7 @@ public class Interface extends JFrame implements ActionListener{
 		
 		initTiles();
 		drawPanel();
-	
+		empty = new ImageIcon(tiles[0][0].getIcon().toString());
 		frame.setVisible(true);
 	} // end of constructor
 	
@@ -54,10 +56,12 @@ public class Interface extends JFrame implements ActionListener{
 				tiles[i][j] = tile;
 				counter++;
 			}
+			
 		}
+	
 	}
 	
-	ImageIcon iTemp = new ImageIcon(tiles[0][0].getIcon().toString());
+	
 
 	public void drawPanel(){
 		for (int i=0; i<rows; i++) {
@@ -70,25 +74,67 @@ public class Interface extends JFrame implements ActionListener{
 	
 	public boolean distance(int i, int j) {
 
-		if(tiles[i-1][j].getIcon() == i0 ||
-		   tiles[i+1][j].getIcon() == i0 ||
-		   tiles[i][j-1].getIcon() == i0 || 
-		   tiles[i][j-1].getIcon() == i0 )return true;
+		if(i==trackX && (trackY == j+1 || trackY == j-1) ){
+			//	trackX=i;
+				//trackY=j;		
+				return true;
 
-		else return false;
+	
+		}
+		else if(j==trackY && (trackX == i+1 || trackX == i-1) ) {
+			//	trackX=i;
+				//trackY=j;		
+				return true;
+		}
+
+		else return false;		
+
+
+		/*if(tiles[i-1][j].getIcon() == empty){
+			trackX = i-1;
+			trackY = j;
+			return true;
+		}
+		  else if(tiles[i+1][j].getIcon() == empty){
+			trackX = i+1;
+			trackY = j;
+			return true;
+		}
+		 else if(tiles[i][j-1].getIcon() == empty){
+			trackX = i;
+			trackY = j-1;
+			return true;
+		}
+		 else if(tiles[i][j-1].getIcon() == empty ){
+			trackX = i;
+			trackY = j-1;
+			return true;
+		}
+
+		else return false;*/
 	}
 
 	public void actionPerformed(ActionEvent e){  
 
-		int count = 0;
-	if (e.getSource() == tiles[0][1]){
-		if (distance(0,1) == true){
-			//System.out.println("FUCKEN WORKING");
-		
-		}
+	int count = 0;
+
+	for (int a=0; a<rows; a++) {
+		for (int b=0; b<cols; b++) {
+			if (e.getSource() == tiles[a][b]){
+				if (distance(a,b) == true){
+			
+					tiles[trackX][trackY].setIcon(tiles[a][b].getIcon());
+					tiles[a][b].setIcon(empty);
+					trackX = a;
+					trackY = b;
+					count++;
+					//break;
+				}
 	
 		
-	}	
+			}
+		}
+	}
 
 	 }// end of ActionPerformed
 
