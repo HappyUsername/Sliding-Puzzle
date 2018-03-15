@@ -9,30 +9,41 @@ import java.lang.Boolean;
 public class Interface extends JFrame implements ActionListener{
 	private JFrame frame = new JFrame("Puzzle"); // moved the objects out of constructor
 	private JPanel panel = new JPanel();
+	private JPanel panel2 = new JPanel();//2nd panel
 
 	private JMenuBar menuB = new JMenuBar();
 	private JMenu menu = new JMenu();
-	private JMenuItem HighScore = new JMenuItem("HighScore");
-	private JMenuItem Random = new JMenuItem("Random");
-	private JMenuItem About = new JMenuItem("About");
+	private JButton HighScore = new JButton("HighScore");
+	private JButton Random = new JButton("Random");
+	private JButton About = new JButton("About");
+	//private JMenuItem counting = new JMenuItem("Count: "+ count);
 
 	private final int rows = 3;
 	private final int cols = 4;
 	private JButton tiles[][] = new JButton[rows][cols];
 	
-	
+	JLabel Score = new JLabel("Score: ");
 	
 	private int trackX = 0, trackY = 0; // needed for the tracking of the hole
 	private ImageIcon empty;
-	//ImageIcon empty = new ImageIcon("bart0.jpg");
+
+	private int count = 0; // neede for the counter of how many times
+	
+	private JTextField textCount = new JTextField(count);
+
 	public Interface(){
 
-		frame.setContentPane(panel);
-		frame.setSize(448,360);
+		//frame.setContentPane(panel);
+		frame.add(panel,BorderLayout.CENTER);
+		frame.add(panel2,BorderLayout.PAGE_END);	
+		frame.setSize(458,420);
+		//frame.setSize(448,560);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//frame.setJMenuBar(menuB);
-		//menuB.add(HighScore);
-		//menuB.add(Random);
+		frame.setJMenuBar(menuB);
+		menuB.add(HighScore);
+		menuB.add(Random);
+		//menuB.add(counting);
+		//menuB.add(new JTextField(count));
 		//menuB.add(About);
 
 		GridLayout layout = new GridLayout(3,4);
@@ -42,6 +53,8 @@ public class Interface extends JFrame implements ActionListener{
 		initTiles();
 		drawPanel();
 		empty = new ImageIcon(tiles[0][0].getIcon().toString());
+		panel2.add(Score);
+		panel2.add(textCount);
 		frame.setVisible(true);
 	} // end of constructor
 	
@@ -69,6 +82,7 @@ public class Interface extends JFrame implements ActionListener{
 				panel.add(tiles[i][j]);
 			}
 		}
+
 		panel.repaint();
 	}
 	
@@ -90,33 +104,11 @@ public class Interface extends JFrame implements ActionListener{
 		else return false;		
 
 
-		/*if(tiles[i-1][j].getIcon() == empty){
-			trackX = i-1;
-			trackY = j;
-			return true;
-		}
-		  else if(tiles[i+1][j].getIcon() == empty){
-			trackX = i+1;
-			trackY = j;
-			return true;
-		}
-		 else if(tiles[i][j-1].getIcon() == empty){
-			trackX = i;
-			trackY = j-1;
-			return true;
-		}
-		 else if(tiles[i][j-1].getIcon() == empty ){
-			trackX = i;
-			trackY = j-1;
-			return true;
-		}
-
-		else return false;*/
 	}
 
 	public void actionPerformed(ActionEvent e){  
 
-	int count = 0;
+
 
 	for (int a=0; a<rows; a++) {
 		for (int b=0; b<cols; b++) {
@@ -128,6 +120,8 @@ public class Interface extends JFrame implements ActionListener{
 					trackX = a;
 					trackY = b;
 					count++;
+					textCount.setText(Integer.toString(count));
+					panel2.validate();
 					//break;
 				}
 	
@@ -138,6 +132,28 @@ public class Interface extends JFrame implements ActionListener{
 
 	 }// end of ActionPerformed
 
-	
+	public boolean isComplete(){
+		boolean temp = false;
+		byte counter = 0;
+		for (int a=0; a<rows; a++) {
+			for (int b=0; b<cols; b++) {
+				
+				ImageIcon checkI = new ImageIcon("bart" + counter + ".jpg");
+				JButton checkButton = new JButton(checkI);
+					if (tiles[a][b].getIcon() == checkButton.getIcon()) temp = true;
+
+					else{
+						temp = false; break;
+					}
+
+					}	
+		}
+		
+		
+		if (temp == true) return true;
+		
+		else return false;
+
+	}
 
 }
