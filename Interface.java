@@ -5,11 +5,12 @@ import javax.net.*;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import java.lang.Boolean;
+import java.io.*;
 
 public class Interface extends JFrame implements ActionListener{
 	private JFrame frame = new JFrame("Puzzle"); // moved the objects out of constructor
 	private JPanel panel = new JPanel();
-	private JPanel panel2 = new JPanel();//2nd panel
+	private JPanel panel2 = new JPanel();//2nd panel for the moves number
 
 	private JMenuBar menuB = new JMenuBar();
 	private JMenu menu = new JMenu();
@@ -21,15 +22,25 @@ public class Interface extends JFrame implements ActionListener{
 	private final int rows = 3;
 	private final int cols = 4;
 	private JButton tiles[][] = new JButton[rows][cols];
-	
+
+//bonus things
+
 	JLabel Score = new JLabel("Score: ");
 	
 	private int trackX = 0, trackY = 0; // needed for the tracking of the hole
 	private ImageIcon empty;
 
 	private int count = 0; // neede for the counter of how many times
-	
-	private JTextField textCount = new JTextField(count);
+	private JTextField textCount = new JTextField(count); //text counter of moves
+//Highscore
+	private String Name; // name in Highscore
+	//static String allRecord;	// for the highscore table
+	private String allRecord;	// for the highscore table
+	private JTextField scoreName = new JTextField(10);
+	private JButton addScore = new JButton("Add to highscore list!");
+	private JFrame scoreFrame = new JFrame("HighScore");
+	private JPanel scorePanel = new JPanel();
+
 
 	public Interface(){
 
@@ -37,25 +48,32 @@ public class Interface extends JFrame implements ActionListener{
 		frame.add(panel,BorderLayout.CENTER);
 		frame.add(panel2,BorderLayout.PAGE_END);	
 		frame.setSize(458,420);
-		//frame.setSize(448,560);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setJMenuBar(menuB);
 		menuB.add(HighScore);
 		menuB.add(Random);
-		//menuB.add(counting);
-		//menuB.add(new JTextField(count));
-		//menuB.add(About);
+
 
 		GridLayout layout = new GridLayout(3,4);
 		panel.setLayout(layout);
+
+		// put in here highscore Things
+		addScore.addActionListener(this);
+		//scoreFrame.add(panel,BorderLayout.CENTER);
+		scoreFrame.setContentPane(scorePanel);
+		scoreFrame.setSize(400,400);
+		scoreFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		scoreFrame.setVisible(true);
+		scorePanel.add(addScore);
+		scorePanel.add(scoreName);
+
 	 	
-		
 		initTiles();
 		drawPanel();
 		empty = new ImageIcon(tiles[0][0].getIcon().toString());
 		panel2.add(Score);
 		panel2.add(textCount);
-		frame.setVisible(true);
+		frame.setVisible(false); // set to true
 	} // end of constructor
 	
 	public void initTiles(){
@@ -110,31 +128,37 @@ public class Interface extends JFrame implements ActionListener{
 
 
 
-	for (int a=0; a<rows; a++) {
-		for (int b=0; b<cols; b++) {
-			if (e.getSource() == tiles[a][b]){
-				if (distance(a,b) == true){
+		for (int a=0; a<rows; a++) {
+			for (int b=0; b<cols; b++) {
+				if (e.getSource() == tiles[a][b]){
+					if (distance(a,b) == true){
 			
-					tiles[trackX][trackY].setIcon(tiles[a][b].getIcon());
-					tiles[a][b].setIcon(empty);
-					trackX = a;
-					trackY = b;
-					count++;
-					textCount.setText(Integer.toString(count));
-					panel2.validate();
-					//break;
-				}
+						tiles[trackX][trackY].setIcon(tiles[a][b].getIcon());
+						tiles[a][b].setIcon(empty);
+						trackX = a;
+						trackY = b;
+						count++;
+						textCount.setText(Integer.toString(count));
+						panel2.validate();
+						if(isComplete()==true){break;}
+					}
 	
 		
+				}
 			}
 		}
-	}
+		
+		if(e.getSource() == addScore /*&& isComplete()==true*/){
+			scoresWrite();
+		}
+			
 
 	 }// end of ActionPerformed
 
 	public boolean isComplete(){
 		boolean temp = false;
 		byte counter = 0;
+
 		for (int a=0; a<rows; a++) {
 			for (int b=0; b<cols; b++) {
 				
@@ -153,6 +177,33 @@ public class Interface extends JFrame implements ActionListener{
 		if (temp == true) return true;
 		
 		else return false;
+
+	}
+
+
+	public void scoresWrite(){
+		File newFile = new File("records.txt");
+		//frame1.setVisible(); unvisible
+
+			Name = ("");
+			Name = scoreName.getText(); //.trim();
+			allRecord = ("Name: " +Name);
+			
+			try{
+			FileWriter fileW = new FileWriter(newFile);
+			BufferedWriter buffW = new BufferedWriter(fileW);//make it write "count" too
+			buffW.write(allRecord);
+			buffW.write(count);
+			buffW.newLine();
+			buffW.close();
+			
+			}
+			catch(Exception E){
+				System.out.println("Problem");
+			}
+			
+		
+
 
 	}
 
