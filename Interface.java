@@ -38,7 +38,7 @@ public class Interface extends JFrame implements ActionListener{
 	private String allRecord;	// for the highscore table
 	private JTextField scoreName = new JTextField(10);
 	private JButton addScore = new JButton("Add to highscore list!");
-	private JFrame scoreFrame = new JFrame("HighScore");
+	private JFrame scoreFrame = new JFrame("High Scores");
 	private JPanel scorePanel = new JPanel();
 
 
@@ -66,6 +66,7 @@ public class Interface extends JFrame implements ActionListener{
 		scoreFrame.setVisible(true);
 		scorePanel.add(addScore);
 		scorePanel.add(scoreName);
+		//scorePanel.add(count); 
 
 	 	
 		initTiles();
@@ -183,7 +184,7 @@ public class Interface extends JFrame implements ActionListener{
 
 	public void scoresWrite(){
 		File newFile = new File("records.txt");
-		//frame1.setVisible(); unvisible
+		//scoreFrame.setVisible(true);
 
 			Name = ("");
 			Name = scoreName.getText(); //.trim();
