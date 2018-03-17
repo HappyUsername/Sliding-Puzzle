@@ -6,6 +6,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import java.lang.Boolean;
 import java.io.*;
+import java.util.Scanner;
 
 public class Interface extends JFrame implements ActionListener{
 	private JFrame frame = new JFrame("Puzzle"); // moved the objects out of constructor
@@ -28,18 +29,23 @@ public class Interface extends JFrame implements ActionListener{
 	JLabel Score = new JLabel("Score: ");
 	
 	private int trackX = 0, trackY = 0; // needed for the tracking of the hole
-	private ImageIcon empty;
+	private ImageIcon empty; // used for storing the bart0.jpg
 
 	private int count = 0; // neede for the counter of how many times
 	private JTextField textCount = new JTextField(count); //text counter of moves
+
 //Highscore
+	
 	private String Name; // name in Highscore
-	//static String allRecord;	// for the highscore table
 	private String allRecord;	// for the highscore table
+	private File newFile = new File("records.txt");
 	private JTextField scoreName = new JTextField(10);
+	private JTextField scoreWinnerN[] = new JTextField[10]; // add to panel
+	private JTextField scoreWinner[] = new JTextField[10];		
 	private JButton addScore = new JButton("Add to highscore list!");
 	private JFrame scoreFrame = new JFrame("High Scores");
 	private JPanel scorePanel = new JPanel();
+	Scanner scan; // scanner
 
 
 	public Interface(){
@@ -71,6 +77,9 @@ public class Interface extends JFrame implements ActionListener{
 	 	
 		initTiles();
 		drawPanel();
+		scoresRead();
+		drawPanel2();
+
 		empty = new ImageIcon(tiles[0][0].getIcon().toString());
 		panel2.add(Score);
 		panel2.add(textCount);
@@ -183,7 +192,7 @@ public class Interface extends JFrame implements ActionListener{
 
 
 	public void scoresWrite(){
-		File newFile = new File("records.txt");
+
 		//scoreFrame.setVisible(true);
 
 			Name = ("");
@@ -207,5 +216,42 @@ public class Interface extends JFrame implements ActionListener{
 
 
 	}
+	
+	public void scoresRead(){//just for reading from the file, comparing - other method
+		// make it view with a button
+		int i = 0;
+		String s;
+		int s2;
+
+		try{
+		scan = new Scanner(newFile);
+		 } catch (Exception E) {
+			System.out.println("Problem");
+		    }
+	
+		do{
+		
+			s = scan.next();
+			scoreWinnerN[i].setText(s);
+			s2 = scan.nextInt();
+			//scoreWinner[i].setText(Integer.toString(s2));
+	
+			i++;
+		}
+		while(scan.hasNext()); // and or or || scan.hasNextInt()
+	
+		scan.close();
+	}
+
+	public void drawPanel2(){
+		for (int i=0; i<10; i++) {
+				scorePanel.add(scoreWinnerN[i]);
+				scorePanel.add(scoreWinner[i]);
+			}
+		
+
+		scorePanel.repaint();
+	}
+	
 
 }
