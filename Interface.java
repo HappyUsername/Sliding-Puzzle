@@ -23,6 +23,8 @@ public class Interface extends JFrame implements ActionListener{
 	private final int rows = 3;
 	private final int cols = 4;
 	private JButton tiles[][] = new JButton[rows][cols];
+	private JButton completeTiles[][] = new JButton[rows][cols];
+	private JButton Test = new JButton();
 
 //bonus things
 
@@ -69,7 +71,7 @@ public class Interface extends JFrame implements ActionListener{
 		scoreFrame.setContentPane(scorePanel);
 		scoreFrame.setSize(400,400);
 		scoreFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		scoreFrame.setVisible(true);
+		scoreFrame.setVisible(false);
 		scorePanel.add(addScore);
 		scorePanel.add(scoreName);
 		//scorePanel.add(count); 
@@ -77,13 +79,13 @@ public class Interface extends JFrame implements ActionListener{
 	 	
 		initTiles();
 		drawPanel();
-		scoresRead();
-		drawPanel2();
+		//scoresRead();
+		//drawPanel2();
 
 		empty = new ImageIcon(tiles[0][0].getIcon().toString());
 		panel2.add(Score);
 		panel2.add(textCount);
-		frame.setVisible(false); // set to true
+		frame.setVisible(true); // set to true
 	} // end of constructor
 	
 	public void initTiles(){
@@ -95,10 +97,19 @@ public class Interface extends JFrame implements ActionListener{
 				tile.setMargin(new Insets(0, 0, 0, 0));
 				tile.addActionListener(this);
 				tiles[i][j] = tile;
+				completeTiles[i][j] = tile;
 				counter++;
 			}
 			
 		}
+		//Test = tiles[1][0];
+		Test.setIcon(tiles[1][0].getIcon());// bart 4
+
+
+		tiles[1][0].setIcon(tiles[1][1].getIcon());
+		tiles[1][1].setIcon(tiles[0][1].getIcon());
+		tiles[0][1].setIcon(Test.getIcon());
+		
 	
 	}
 	
@@ -137,8 +148,8 @@ public class Interface extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e){  
 
 
-
-		for (int a=0; a<rows; a++) {
+//outerloop:
+		for (int a=0; a<rows; a++) {	
 			for (int b=0; b<cols; b++) {
 				if (e.getSource() == tiles[a][b]){
 					if (distance(a,b) == true){
@@ -150,7 +161,11 @@ public class Interface extends JFrame implements ActionListener{
 						count++;
 						textCount.setText(Integer.toString(count));
 						panel2.validate();
-						if(isComplete()==true){break;}
+						if(isComplete() == true){
+							//scoreFrame.setVisible(true);
+							System.out.println("Finished");
+							break; // break outerloop;
+						}
 					}
 	
 		
@@ -165,30 +180,40 @@ public class Interface extends JFrame implements ActionListener{
 
 	 }// end of ActionPerformed
 
+/*
 	public boolean isComplete(){
 		boolean temp = false;
-		byte counter = 0;
+		int counter = 0;
 
 		for (int a=0; a<rows; a++) {
 			for (int b=0; b<cols; b++) {
 				
-				ImageIcon checkI = new ImageIcon("bart" + counter + ".jpg");
-				JButton checkButton = new JButton(checkI);
-					if (tiles[a][b].getIcon() == checkButton.getIcon()) temp = true;
+				//ImageIcon checkI = new ImageIcon("bart" + counter + ".jpg");
+				//JButton Somethiug
+Somethiug
+Somethiug
+checkButton = new JButton(checkI);
+					if (tiles[a][b].getIcon() == completeTiles[a][b].getIcon()) {counter++;}
 
-					else{
-						temp = false; break;
+					else{//break;
+						temp = false; 
 					}
 
-					}	
+			}	
+		//counter++;
 		}
 		
 		
-		if (temp == true) return true;
+		if (counter <= 12) {
+			return false;
+		}
 		
-		else return false;
+		else {
+			return true;
+		}
 
-	}
+	}*/
+
 
 
 	public void scoresWrite(){
@@ -234,7 +259,7 @@ public class Interface extends JFrame implements ActionListener{
 			s = scan.next();
 			scoreWinnerN[i].setText(s);
 			s2 = scan.nextInt();
-			//scoreWinner[i].setText(Integer.toString(s2));
+			scoreWinner[i].setText(Integer.toString(s2));
 	
 			i++;
 		}
@@ -251,6 +276,35 @@ public class Interface extends JFrame implements ActionListener{
 		
 
 		scorePanel.repaint();
+	}
+	public boolean isComplete(){
+		int counter = 0;
+	//a.getIcon().toString().equals(b.getIcon().toString())
+		for (int a=0; a<rows; a++) {
+			for (int b=0; b<cols; b++) {
+				//if (tiles[a][b].getIcon().equals(completeTiles[a][b].getIcon())){
+				//if (tiles[a][b].getIcon().toString().equals(completeTiles[a][b].getIcon().toString())){
+				if(((ImageIcon) tiles[a][b].getIcon()).getDescription().compareTo("bart"+counter+".jpg")){
+					counter++;
+					System.out.println("Something");
+				
+				}else {
+					System.out.println("Nothing");
+				return false;
+				}			
+
+			}	
+		}
+		
+		
+		if (counter == 120) {
+			return true;
+		}
+		
+		else {
+			return false;
+		}
+
 	}
 	
 
