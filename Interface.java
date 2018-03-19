@@ -29,25 +29,24 @@ public class Interface extends JFrame implements ActionListener{
 //bonus things
 
 	JLabel Score = new JLabel("Score: ");
-	
 	private int trackX = 0, trackY = 0; // needed for the tracking of the hole
 	private ImageIcon empty; // used for storing the bart0.jpg
 
 	private int count = 0; // neede for the counter of how many times
-	private JTextField textCount = new JTextField(count); //text counter of moves
+	private JTextField textCount = new JTextField(count); //text counter of moves  ++ set to not editable
 
 //Highscore
 	
 	private String Name; // name in Highscore
 	private String allRecord;	// for the highscore table
-	private File newFile = new File("records.txt");
+	private File newFile = new File("/home/lancs/boychev/hdrive/CourseWork110/records.txt");
 	private JTextField scoreName = new JTextField(10);
 	private JTextField scoreWinnerN[] = new JTextField[10]; // add to panel
 	private JTextField scoreWinner[] = new JTextField[10];		
 	private JButton addScore = new JButton("Add to highscore list!");
 	private JFrame scoreFrame = new JFrame("High Scores");
 	private JPanel scorePanel = new JPanel();
-	Scanner scan; // scanner
+	public Scanner scan; // scanner
 
 
 	public Interface(){
@@ -79,11 +78,14 @@ public class Interface extends JFrame implements ActionListener{
 	 	
 		initTiles();
 		drawPanel();
+		openScores();
+		//readScore();
 		//scoresRead();
 		//drawPanel2();
 
 		empty = new ImageIcon(tiles[0][0].getIcon().toString());
 		panel2.add(Score);
+		textCount.setEditable(false);
 		panel2.add(textCount);
 		frame.setVisible(true); // set to true
 	} // end of constructor
@@ -135,7 +137,7 @@ public class Interface extends JFrame implements ActionListener{
 	
 		}
 		else if(j==trackY && (trackX == i+1 || trackX == i-1) ) {
-			//	trackX=i;
+			//	tracknewFileX=i;
 				//trackY=j;		
 				return true;
 		}
@@ -148,7 +150,6 @@ public class Interface extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e){  
 
 
-//outerloop:
 		for (int a=0; a<rows; a++) {	
 			for (int b=0; b<cols; b++) {
 				if (e.getSource() == tiles[a][b]){
@@ -162,9 +163,11 @@ public class Interface extends JFrame implements ActionListener{
 						textCount.setText(Integer.toString(count));
 						panel2.validate();
 						if(isComplete() == true){
-							//scoreFrame.setVisible(true);
+							a=rows;
+							b=cols;
 							System.out.println("Finished");
-							break; // break outerloop;
+							scoreFrame.setVisible(true);
+							break;
 						}
 					}
 	
@@ -174,61 +177,28 @@ public class Interface extends JFrame implements ActionListener{
 		}
 		
 		if(e.getSource() == addScore /*&& isComplete()==true*/){
+			int a = count;
 			scoresWrite();
 		}
 			
 
 	 }// end of ActionPerformed
 
-/*
-	public boolean isComplete(){
-		boolean temp = false;
-		int counter = 0;
 
-		for (int a=0; a<rows; a++) {
-			for (int b=0; b<cols; b++) {
-				
-				//ImageIcon checkI = new ImageIcon("bart" + counter + ".jpg");
-				//JButton Somethiug
-Somethiug
-Somethiug
-checkButton = new JButton(checkI);
-					if (tiles[a][b].getIcon() == completeTiles[a][b].getIcon()) {counter++;}
-
-					else{//break;
-						temp = false; 
-					}
-
-			}	
-		//counter++;
-		}
-		
-		
-		if (counter <= 12) {
-			return false;
-		}
-		
-		else {
-			return true;
-		}
-
-	}*/
-
-
-
-	public void scoresWrite(){
+	public void scoresWrite(){ // does not work ->deletes all previous records -> it doesnt write it in the array
 
 		//scoreFrame.setVisible(true);
 
 			Name = ("");
 			Name = scoreName.getText(); //.trim();
-			allRecord = ("Name: " +Name);
-			
+			//allRecord = ("Name: " +Name);
+			allRecord = (Name + " ");
 			try{
-			FileWriter fileW = new FileWriter(newFile);
+			FileWriter fileW = new FileWriter(newFile, true);
 			BufferedWriter buffW = new BufferedWriter(fileW);//make it write "count" too
+			buffW.newLine();
 			buffW.write(allRecord);
-			buffW.write(count);
+			buffW.write(Integer.toString(count));
 			buffW.newLine();
 			buffW.close();
 			
@@ -242,68 +212,126 @@ checkButton = new JButton(checkI);
 
 	}
 	
-	public void scoresRead(){//just for reading from the file, comparing - other method
+/*	public void scoresRead(){//just for reading from the file, comparing - other method
 		// make it view with a button
 		int i = 0;
 		String s;
 		int s2;
 
-		try{
-		scan = new Scanner(newFile);
-		 } catch (Exception E) {
-			System.out.println("Problem");
-		    }
-	
-		do{
-		
-			s = scan.next();
-			scoreWinnerN[i].setText(s);
-			s2 = scan.nextInt();
-			scoreWinner[i].setText(Integer.toString(s2));
-	
-			i++;
+		String n = "none";
+		int zer = 0;
+		/*for (int a=0; a<10; a++) {
+				scoreWinnerN[a].setText(n);
+				scoreWinner[a].setText(Integer.toString(zer));
 		}
-		while(scan.hasNext()); // and or or || scan.hasNextInt()
+
+		try{
+		 Scanner scan = new Scanner(newFile);
+		 
 	
+			do{
+		
+				String b = scan.next();
+				scoreWinnerN[i].setText(b);
+				//s2 = scan.nextInt();
+				//scoreWinner[i].setText(Integer.toString(s2));
+				scorePanel.add(scoreWinnerN[i]);// problem not here
+				scorePanel.add(scoreWinner[i]);// problem not here
+				i++;
+			}
+			while(scan.hasNext() || scan.hasNextInt() ); // and or or || scan.hasNextInt()
+			//while(i==10);
 		scan.close();
+		}catch (Exception E) {
+			System.out.println("Problem here");
+		    }
+
+		/*for (int j=0; j<10; j++) {
+				scorePanel.add(scoreWinnerN[j]);
+				scorePanel.add(scoreWinner[j]);
+		}
+		
+
+		scorePanel.repaint();
+	}*/
+
+	public void openScores(){
+
+		try{
+		 scan = new Scanner(newFile);
+		 }catch (FileNotFoundException ex) {
+			System.out.println("Problem here");
+		    }
+	}
+	
+	public void readScore(){
+	int i = 0;
+		//while(scan.hasNextInt()){
+		do{
+				String b = scan.next();
+				//scoreWinnerN[i].setText(b);
+				//scorePanel.add(scoreWinnerN[i]);
+				int s2 = scan.nextInt();
+				//scoreWinner[i].setText(Integer.toString(s2));
+				String fff = scoreWinnerN[i].getText();
+				System.out.println("PLS DO WORK:"+fff);
+				i++;
+				
+		}while(i<10);
+			scorePanel.repaint();
 	}
 
 	public void drawPanel2(){
+	String n = "none";
+	int zer = 0;
+		/*for (int i=0; i<10; i++) {
+				scoreWinnerN[i];
+				scoreWinner[i];
+		}*/
+
 		for (int i=0; i<10; i++) {
 				scorePanel.add(scoreWinnerN[i]);
 				scorePanel.add(scoreWinner[i]);
-			}
+		}
 		
 
 		scorePanel.repaint();
 	}
 	public boolean isComplete(){
+		
 		int counter = 0;
+		boolean temp = false;
 	//a.getIcon().toString().equals(b.getIcon().toString())
 		for (int a=0; a<rows; a++) {
 			for (int b=0; b<cols; b++) {
 				//if (tiles[a][b].getIcon().equals(completeTiles[a][b].getIcon())){
 				//if (tiles[a][b].getIcon().toString().equals(completeTiles[a][b].getIcon().toString())){
-				if(((ImageIcon) tiles[a][b].getIcon()).getDescription().compareTo("bart"+counter+".jpg")){
+/*String desc = ((ImageIcon)button.getIcon()).getDescription();
+if(desc.equals(image1.getDescription())
+*/			
+				if(  ((ImageIcon)tiles[a][b].getIcon()).getDescription().compareTo("bart" +counter+ ".jpg") == 0){
 					counter++;
-					System.out.println("Something");
+					//System.out.println("Something");
+					temp = true;
 				
-				}else {
-					System.out.println("Nothing");
-				return false;
+				}
+				else {
+					//System.out.println("Nothing");
+					a=rows;
+					b=cols;
+					temp = false;
+					return false;
 				}			
 
 			}	
 		}
 		
 		
-		if (counter == 120) {
+		if (temp == true) {
 			return true;
 		}
+		else return false;
 		
-		else {
-			return false;
-		}
 
 	}
 	
