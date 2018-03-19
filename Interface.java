@@ -39,7 +39,8 @@ public class Interface extends JFrame implements ActionListener{
 	
 	private String Name; // name in Highscore
 	private String allRecord;	// for the highscore table
-	private File newFile = new File("/home/lancs/boychev/hdrive/CourseWork110/records.txt");
+	//private File newFile = new File("/home/lancs/boychev/hdrive/CourseWork110/records.txt");
+	private File newFile = new File("records.txt");
 	private JTextField scoreName = new JTextField(10);
 	private JTextField scoreWinnerN[] = new JTextField[10]; // add to panel
 	private JTextField scoreWinner[] = new JTextField[10];		
@@ -70,18 +71,19 @@ public class Interface extends JFrame implements ActionListener{
 		scoreFrame.setContentPane(scorePanel);
 		scoreFrame.setSize(400,400);
 		scoreFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		scoreFrame.setVisible(false);
+		scoreFrame.setVisible(true);
 		scorePanel.add(addScore);
 		scorePanel.add(scoreName);
 		//scorePanel.add(count); 
 
 	 	
 		initTiles();
+		//shuffle();
 		drawPanel();
 		openScores();
 		//readScore();
 		//scoresRead();
-		//drawPanel2();
+		drawScorePanel();
 
 		empty = new ImageIcon(tiles[0][0].getIcon().toString());
 		panel2.add(Score);
@@ -176,9 +178,18 @@ public class Interface extends JFrame implements ActionListener{
 			}
 		}
 		
-		if(e.getSource() == addScore /*&& isComplete()==true*/){
+		if(e.getSource() == addScore){
+			JTextField temp = new JTextField(15);
+			JTextField temp2 = new JTextField(5);
 			int a = count;
+			String n = scoreName.getText();
+			System.out.println("HERE: " + n);
+			temp.setText(n);
+			scoreWinnerN[1] = temp;
+			temp2.setText(Integer.toString(count));
+			scoreWinner[1] = temp2;
 			scoresWrite();
+			scorePanel.repaint();
 		}
 			
 
@@ -259,6 +270,7 @@ public class Interface extends JFrame implements ActionListener{
 
 		try{
 		 scan = new Scanner(newFile);
+		
 		 }catch (FileNotFoundException ex) {
 			System.out.println("Problem here");
 		    }
@@ -270,29 +282,36 @@ public class Interface extends JFrame implements ActionListener{
 		do{
 				String b = scan.next();
 				//scoreWinnerN[i].setText(b);
-				//scorePanel.add(scoreWinnerN[i]);
 				int s2 = scan.nextInt();
 				//scoreWinner[i].setText(Integer.toString(s2));
-				String fff = scoreWinnerN[i].getText();
-				System.out.println("PLS DO WORK:"+fff);
+				//String fff = scoreWinnerN[i].getText();
+				//System.out.println("PLS DO WORK:"+fff);
 				i++;
 				
 		}while(i<10);
-			scorePanel.repaint();
+			//scorePanel.repaint();
 	}
 
-	public void drawPanel2(){
+	public void drawScorePanel(){
 	String n = "none";
 	int zer = 0;
-		/*for (int i=0; i<10; i++) {
-				scoreWinnerN[i];
-				scoreWinner[i];
-		}*/
-
 		for (int i=0; i<10; i++) {
+				JTextField temp = new JTextField(15);
+				temp.setText(n);
+				temp.setEditable(false);
+				scoreWinnerN[i] = temp;
+				JTextField temp2 = new JTextField(5);
+				temp2.setText(Integer.toString(zer));
+				temp2.setEditable(false);
+				scoreWinner[i] = temp2;
 				scorePanel.add(scoreWinnerN[i]);
 				scorePanel.add(scoreWinner[i]);
 		}
+
+		/*for (int i=0; i<10; i++) {
+				scorePanel.add(scoreWinnerN[i]);
+				scorePanel.add(scoreWinner[i]);
+		}*/
 		
 
 		scorePanel.repaint();
@@ -332,6 +351,23 @@ if(desc.equals(image1.getDescription())
 		}
 		else return false;
 		
+
+	}
+	public void shuffle(){
+	//for(int j = 0;j<6; j++){
+		for (int a=0; a<rows; a++) {	
+			for (int b=0; b<cols; b++) {
+				if (distance(a,b) == true){
+						tiles[trackX][trackY].setIcon(tiles[a][b].getIcon());
+						tiles[a][b].setIcon(empty);
+						trackX = a;
+						trackY = b;
+				
+
+				}
+			}
+		}
+	// }//end of j for
 
 	}
 	
