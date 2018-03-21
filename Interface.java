@@ -17,7 +17,6 @@ public class Interface extends JFrame implements ActionListener{
 	private final int rows = 3;
 	private final int cols = 4;
 	private JButton tiles[][] = new JButton[rows][cols];
-	private JButton completeTiles[][] = new JButton[rows][cols];
 	private JButton Test = new JButton();
 
 //other things
@@ -64,11 +63,9 @@ public class Interface extends JFrame implements ActionListener{
 		scorePanel.add(scoreName);
 	 	
 		initTiles();
-		//shuffle();
 		drawPanel();
 		openScores();
-		//readScore();
-		//scoresRead();
+		//readScore(); // NullPointerException
 		drawScorePanel();
 
 		empty = new ImageIcon(tiles[0][0].getIcon().toString());//set the first cordiantes of the hole
@@ -90,7 +87,6 @@ public class Interface extends JFrame implements ActionListener{
 				tile.setMargin(new Insets(0, 0, 0, 0));
 				tile.addActionListener(this);
 				tiles[i][j] = tile;
-				completeTiles[i][j] = tile;
 				counter++;
 			}
 			
@@ -204,7 +200,7 @@ public class Interface extends JFrame implements ActionListener{
 	}
 	
 
-	public void openScores(){
+	public void openScores(){ // opens the file for the highscores 
 
 		try{
 		 scan = new Scanner(newFile);
@@ -222,8 +218,8 @@ public class Interface extends JFrame implements ActionListener{
 				scoreWinnerN[i].setText(b);
 				int s2 = scan.nextInt();
 				scoreWinner[i].setText(Integer.toString(s2));
-				String fff = scoreWinnerN[i].getText();
-				System.out.println("PLS DO WORK:"+fff);
+				String temporaryString = scoreWinnerN[i].getText();
+				System.out.println("PLS DO WORK:" + temporaryString);
 				i++;
 				
 		}while(scan.hasNextInt());
@@ -269,10 +265,10 @@ public class Interface extends JFrame implements ActionListener{
 				
 				}
 				else {
-					//System.out.println("Nothing");
 					a=rows;
 					b=cols;
 					temp = false;
+					return false;
 				}			
 
 			}	
@@ -286,24 +282,5 @@ public class Interface extends JFrame implements ActionListener{
 		
 
 	}// end of isComplete
-
-	public void shuffle(){
-	//for(int j = 0;j<6; j++){
-		for (int a=0; a<rows; a++) {	
-			for (int b=0; b<cols; b++) {
-				if (distance(a,b) == true){
-						tiles[trackX][trackY].setIcon(tiles[a][b].getIcon());
-						tiles[a][b].setIcon(empty);
-						trackX = a;
-						trackY = b;
-				
-
-				}
-			}
-		}
-	// }//end of j for
-
-	}
-	
 
 }
